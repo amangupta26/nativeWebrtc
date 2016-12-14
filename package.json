@@ -1,0 +1,20 @@
+{
+  "name": "nativewebrtc",
+  "version": "1.0.0",
+  "description": "package json for native webrtc",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amangupta26/nativeWebrtc.git"
+  },
+  "dependencies": {
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
