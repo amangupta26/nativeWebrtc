@@ -1,2 +1,4 @@
-It is a personal project which uses native webrtc APIs for video/audio. 
-Will be using React for frontend and webpack for client side module management.
+Plan for the project:
+1. Use gUM to get local video and attach to a video element(React)
+2. Design for the WebRTC library
+3. Signalling Server implementation
