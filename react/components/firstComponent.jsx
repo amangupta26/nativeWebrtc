@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 
 class FirstComponent extends React.Component{
 	render(){
@@ -9,5 +8,5 @@ class FirstComponent extends React.Component{
 	}
 }
 
-if(typeof window !== 'undefined')
-	ReactDOM.render(<FirstComponent />, document.getElementById('root'));
+
+export default FirstComponent
