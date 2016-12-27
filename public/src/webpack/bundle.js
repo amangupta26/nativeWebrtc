@@ -21590,12 +21590,18 @@
 		_createClass(FirstPageContainer, [{
 			key: 'getMedia',
 			value: function getMedia() {
+				var pc1 = new RTCPeerConnection();
+				pc1.onicecandidate = function (event) {
+					console.log("event ", event);
+				};
+
 				var constraints = {
 					'audio': false,
 					'video': true
 				};
 
 				var successMethod = function successMethod(stream) {
+					pc1.addStream(stream);
 					var ele = document.getElementById('vid_local');
 					ele.autoplay = true;
 					ele.srcObject = stream;
@@ -21606,6 +21612,10 @@
 				};
 
 				navigator.mediaDevices.getUserMedia(constraints).then(successMethod, failureMethod);
+
+				this.setState({
+					'hasStarted': true
+				});
 			}
 		}, {
 			key: 'render',

@@ -8,17 +8,26 @@ class FirstPageContainer extends React.Component{
 		this.state = {
 			'hasStarted': false,
 			'hasCalled': false,
-			'hasStopped': false
+			'hasStopped': false,
+			'localStream': null,
+			'remoteStream': null,
+			'localPeerConnection': null,
+			'remotePeerConnection': null
 		};
 	}
 
 	getMedia(){
+		var mainThis = this;
 		var constraints = {
 			'audio': false,
 			'video': true
 		};
 
 		var successMethod = function(stream){
+			mainThis.setState({
+				'hasStarted': true,
+				'localStream': stream
+			});
 			var ele = document.getElementById('vid_local');
 			ele.autoplay = true;
 			ele.srcObject = stream;
@@ -31,6 +40,11 @@ class FirstPageContainer extends React.Component{
 		navigator.mediaDevices.getUserMedia(constraints).
 			then(successMethod, failureMethod);
 	}
+
+	callPeer(){
+
+	}
+
 
 	render(){
 		return (
