@@ -9,10 +9,20 @@ class VideoContainerComponent extends React.Component{
 		return "vid_" + id;
 	}
 
+
 	render(){
+		const divStyle = {
+			'border': '2px solid black'
+		};
+
+		const videoStyle = {
+			'width': '100%',
+			'height': '100%'
+		};
+
 		return (
-			<div id={this.getContainerId(this.props.id)}>
-				<video id={this.getVideoId(this.props.id)}></video>
+			<div id={this.getContainerId(this.props.id)} className="col-sm-4" style={divStyle}>
+				<video id={this.getVideoId(this.props.id)} style={videoStyle}></video>
 			</div>
 			
 		);

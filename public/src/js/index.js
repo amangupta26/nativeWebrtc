@@ -8,41 +8,29 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _videoContainer = require('./videoContainer');
+var _header = require('./header');
 
-var _videoContainer2 = _interopRequireDefault(_videoContainer);
+var _header2 = _interopRequireDefault(_header);
 
-var _firstComponent = require('./firstComponent');
+var _firstPageContainer = require('./firstPageContainer');
 
-var _firstComponent2 = _interopRequireDefault(_firstComponent);
+var _firstPageContainer2 = _interopRequireDefault(_firstPageContainer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import ToolBarComponent from "./toolBar"
+
+
+// import VideoContainerComponent from "./videoContainer"
 if (typeof window !== 'undefined') {
 	_reactDom2.default.render(_react2.default.createElement(
 		'div',
 		null,
-		_react2.default.createElement(_firstComponent2.default, null),
-		' ',
-		_react2.default.createElement(_videoContainer2.default, { id: 'local' })
-	), document.getElementById('root'), getMedia());
+		_react2.default.createElement(_header2.default, null)
+	), document.getElementById('header'));
+	_reactDom2.default.render(_react2.default.createElement(
+		'div',
+		null,
+		_react2.default.createElement(_firstPageContainer2.default, null)
+	), document.getElementById('root'));
 }
-
-function getMedia() {
-	var constraints = {
-		'audio': false,
-		'video': true
-	};
-
-	var successMethod = function successMethod(stream) {
-		var ele = document.getElementById('vid_local');
-		ele.autoplay = true;
-		ele.srcObject = stream;
-	};
-
-	var failureMethod = function failureMethod(err) {
-		console.log("Error in gUM " + err);
-	};
-
-	navigator.mediaDevices.getUserMedia(constraints).then(successMethod, failureMethod);
-};

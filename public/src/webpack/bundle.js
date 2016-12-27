@@ -54,44 +54,32 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _videoContainer = __webpack_require__(178);
+	var _header = __webpack_require__(178);
 
-	var _videoContainer2 = _interopRequireDefault(_videoContainer);
+	var _header2 = _interopRequireDefault(_header);
 
-	var _firstComponent = __webpack_require__(179);
+	var _firstPageContainer = __webpack_require__(179);
 
-	var _firstComponent2 = _interopRequireDefault(_firstComponent);
+	var _firstPageContainer2 = _interopRequireDefault(_firstPageContainer);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	// import ToolBarComponent from "./toolBar"
+
+
+	// import VideoContainerComponent from "./videoContainer"
 	if (typeof window !== 'undefined') {
 		_reactDom2.default.render(_react2.default.createElement(
 			'div',
 			null,
-			_react2.default.createElement(_firstComponent2.default, null),
-			' ',
-			_react2.default.createElement(_videoContainer2.default, { id: 'local' })
-		), document.getElementById('root'), getMedia());
+			_react2.default.createElement(_header2.default, null)
+		), document.getElementById('header'));
+		_reactDom2.default.render(_react2.default.createElement(
+			'div',
+			null,
+			_react2.default.createElement(_firstPageContainer2.default, null)
+		), document.getElementById('root'));
 	}
-
-	function getMedia() {
-		var constraints = {
-			'audio': false,
-			'video': true
-		};
-
-		var successMethod = function successMethod(stream) {
-			var ele = document.getElementById('vid_local');
-			ele.autoplay = true;
-			ele.srcObject = stream;
-		};
-
-		var failureMethod = function failureMethod(err) {
-			console.log("Error in gUM " + err);
-		};
-
-		navigator.mediaDevices.getUserMedia(constraints).then(successMethod, failureMethod);
-	};
 
 
 /***/ },
@@ -21505,6 +21493,211 @@
 /* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(177);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var HeaderComponent = function (_React$Component) {
+		_inherits(HeaderComponent, _React$Component);
+
+		function HeaderComponent() {
+			_classCallCheck(this, HeaderComponent);
+
+			return _possibleConstructorReturn(this, (HeaderComponent.__proto__ || Object.getPrototypeOf(HeaderComponent)).apply(this, arguments));
+		}
+
+		_createClass(HeaderComponent, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'h1',
+					null,
+					' Native WebRTC'
+				);
+			}
+		}]);
+
+		return HeaderComponent;
+	}(_react2.default.Component);
+
+	exports.default = HeaderComponent;
+
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(177);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _toolbar = __webpack_require__(180);
+
+	var _toolbar2 = _interopRequireDefault(_toolbar);
+
+	var _videoContainer = __webpack_require__(181);
+
+	var _videoContainer2 = _interopRequireDefault(_videoContainer);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var FirstPageContainer = function (_React$Component) {
+		_inherits(FirstPageContainer, _React$Component);
+
+		function FirstPageContainer() {
+			_classCallCheck(this, FirstPageContainer);
+
+			var _this = _possibleConstructorReturn(this, (FirstPageContainer.__proto__ || Object.getPrototypeOf(FirstPageContainer)).call(this));
+
+			_this.state = {
+				'hasStarted': false,
+				'hasCalled': false,
+				'hasStopped': false
+			};
+			return _this;
+		}
+
+		_createClass(FirstPageContainer, [{
+			key: 'getMedia',
+			value: function getMedia() {
+				var constraints = {
+					'audio': false,
+					'video': true
+				};
+
+				var successMethod = function successMethod(stream) {
+					var ele = document.getElementById('vid_local');
+					ele.autoplay = true;
+					ele.srcObject = stream;
+				};
+
+				var failureMethod = function failureMethod(err) {
+					console.log("Error in gUM " + err);
+				};
+
+				navigator.mediaDevices.getUserMedia(constraints).then(successMethod, failureMethod);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+
+				return _react2.default.createElement(
+					'div',
+					{ className: 'container' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'row' },
+						_react2.default.createElement(_toolbar2.default, { val: 'Start', onClick: function onClick() {
+								return _this2.getMedia();
+							} }),
+						_react2.default.createElement(_toolbar2.default, { val: 'Call' })
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'row' },
+						_react2.default.createElement(_videoContainer2.default, { id: 'local' }),
+						_react2.default.createElement(_videoContainer2.default, { id: 'remote' })
+					)
+				);
+			}
+		}]);
+
+		return FirstPageContainer;
+	}(_react2.default.Component);
+
+	exports.default = FirstPageContainer;
+
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(177);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ToolBarComponent = function (_React$Component) {
+		_inherits(ToolBarComponent, _React$Component);
+
+		function ToolBarComponent() {
+			_classCallCheck(this, ToolBarComponent);
+
+			return _possibleConstructorReturn(this, (ToolBarComponent.__proto__ || Object.getPrototypeOf(ToolBarComponent)).apply(this, arguments));
+		}
+
+		_createClass(ToolBarComponent, [{
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+
+				return _react2.default.createElement(
+					'button',
+					{ onClick: function onClick() {
+							return _this2.props.onClick();
+						} },
+					' ',
+					this.props.val
+				);
+			}
+		}]);
+
+		return ToolBarComponent;
+	}(_react2.default.Component);
+
+	exports.default = ToolBarComponent;
+
+
+/***/ },
+/* 181 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -21547,10 +21740,19 @@
 		}, {
 			key: "render",
 			value: function render() {
+				var divStyle = {
+					'border': '2px solid black'
+				};
+
+				var videoStyle = {
+					'width': '100%',
+					'height': '100%'
+				};
+
 				return _react2.default.createElement(
 					"div",
-					{ id: this.getContainerId(this.props.id) },
-					_react2.default.createElement("video", { id: this.getVideoId(this.props.id) })
+					{ id: this.getContainerId(this.props.id), className: "col-sm-4", style: divStyle },
+					_react2.default.createElement("video", { id: this.getVideoId(this.props.id), style: videoStyle })
 				);
 			}
 		}]);
@@ -21559,56 +21761,6 @@
 	}(_react2.default.Component);
 
 	exports.default = VideoContainerComponent;
-
-
-/***/ },
-/* 179 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(177);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var FirstComponent = function (_React$Component) {
-		_inherits(FirstComponent, _React$Component);
-
-		function FirstComponent() {
-			_classCallCheck(this, FirstComponent);
-
-			return _possibleConstructorReturn(this, (FirstComponent.__proto__ || Object.getPrototypeOf(FirstComponent)).apply(this, arguments));
-		}
-
-		_createClass(FirstComponent, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'h1',
-					null,
-					' Native WebRTC'
-				);
-			}
-		}]);
-
-		return FirstComponent;
-	}(_react2.default.Component);
-
-	exports.default = FirstComponent;
 
 
 /***/ }
