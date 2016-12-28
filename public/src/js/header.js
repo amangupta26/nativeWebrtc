@@ -18,16 +18,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var FirstComponent = function (_React$Component) {
-	_inherits(FirstComponent, _React$Component);
+var HeaderComponent = function (_React$Component) {
+	_inherits(HeaderComponent, _React$Component);
 
-	function FirstComponent() {
-		_classCallCheck(this, FirstComponent);
+	function HeaderComponent() {
+		_classCallCheck(this, HeaderComponent);
 
-		return _possibleConstructorReturn(this, (FirstComponent.__proto__ || Object.getPrototypeOf(FirstComponent)).apply(this, arguments));
+		return _possibleConstructorReturn(this, (HeaderComponent.__proto__ || Object.getPrototypeOf(HeaderComponent)).apply(this, arguments));
 	}
 
-	_createClass(FirstComponent, [{
+	_createClass(HeaderComponent, [{
 		key: 'render',
 		value: function render() {
 			return _react2.default.createElement(
@@ -38,7 +38,7 @@ var FirstComponent = function (_React$Component) {
 		}
 	}]);
 
-	return FirstComponent;
+	return HeaderComponent;
 }(_react2.default.Component);
 
-exports.default = FirstComponent;
+exports.default = HeaderComponent;
