@@ -36,7 +36,7 @@ var ToolBarComponent = function (_React$Component) {
 				'button',
 				{ onClick: function onClick() {
 						return _this2.props.onClick();
-					} },
+					}, className: this.props.className },
 				' ',
 				this.props.val
 			);

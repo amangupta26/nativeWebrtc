@@ -21582,7 +21582,11 @@
 			_this.state = {
 				'hasStarted': false,
 				'hasCalled': false,
-				'hasStopped': false
+				'hasStopped': false,
+				'localStream': null,
+				'remoteStream': null,
+				'localPeerConnection': null,
+				'remotePeerConnection': null
 			};
 			return _this;
 		}
@@ -21590,18 +21594,17 @@
 		_createClass(FirstPageContainer, [{
 			key: 'getMedia',
 			value: function getMedia() {
-				var pc1 = new RTCPeerConnection();
-				pc1.onicecandidate = function (event) {
-					console.log("event ", event);
-				};
-
+				var mainThis = this;
 				var constraints = {
 					'audio': false,
 					'video': true
 				};
 
 				var successMethod = function successMethod(stream) {
-					pc1.addStream(stream);
+					mainThis.setState({
+						'hasStarted': true,
+						'localStream': stream
+					});
 					var ele = document.getElementById('vid_local');
 					ele.autoplay = true;
 					ele.srcObject = stream;
@@ -21611,11 +21614,77 @@
 					console.log("Error in gUM " + err);
 				};
 
-				navigator.mediaDevices.getUserMedia(constraints).then(successMethod, failureMethod);
+				navigator.getUserMedia(constraints, successMethod, failureMethod);
+			}
+		}, {
+			key: 'callPeer',
+			value: function callPeer() {
+				var mainThis = this;
+				var servers = null;
+				var pc1 = new RTCPeerConnection(servers);
+				var pc2 = new RTCPeerConnection(servers);
 
-				this.setState({
-					'hasStarted': true
+				pc1.onicecandidate = function (event) {
+					if (event.candidate) pc2.addIceCandidate(new RTCIceCandidate(event.candidate));
+				};
+
+				pc2.onicecandidate = function (event) {
+					if (event.candidate) pc1.addIceCandidate(new RTCIceCandidate(event.candidate));
+				};
+
+				pc2.onaddstream = function (event) {
+					mainThis.setState({
+						'remoteStream': event.stream,
+						'hasCalled': true,
+						'localPeerConnection': pc1,
+						'remotePeerConnection': pc2
+					});
+					var ele = document.getElementById('vid_remote');
+					ele.autoplay = true;
+					ele.srcObject = event.stream;
+				};
+				pc1.addStream(this.state.localStream);
+
+				var offerOptions = {
+					offerToReceiveAudio: 1,
+					offerToReceiveVideo: 1
+				};
+				pc1.createOffer(offerOptions).then(function (offerDesc) {
+					pc1.setLocalDescription(offerDesc).then(function () {}, function (err1) {
+						console.log("err1 ", err1);
+					});
+					pc2.setRemoteDescription(offerDesc).then(function () {}, function (err1) {
+						console.log("err2 ", err2);
+					});
+
+					pc2.createAnswer().then(function (answerDesc) {
+						pc2.setLocalDescription(answerDesc).then(function () {}, function (err1) {
+							console.log("err3 ", err3);
+						});
+						pc1.setRemoteDescription(answerDesc).then(function () {}, function (err1) {
+							console.log("err4 ", err4);
+						});
+					});
 				});
+			}
+		}, {
+			key: 'hangup',
+			value: function hangup() {
+				this.state.localPeerConnection.close();
+				this.state.remotePeerConnection.close();
+				this.setState({
+					'hasStarted': false,
+					'hasCalled': false,
+					'hasStopped': false,
+					'localStream': null,
+					'remoteStream': null,
+					'localPeerConnection': null,
+					'remotePeerConnection': null
+				});
+				var ele = document.getElementById('vid_local');
+				ele.srcObject = null;
+				ele = document.getElementById('vid_remote');
+				ele.srcObject = null;
 			}
 		}, {
 			key: 'render',
@@ -21630,8 +21699,13 @@
 						{ className: 'row' },
 						_react2.default.createElement(_toolbar2.default, { val: 'Start', onClick: function onClick() {
 								return _this2.getMedia();
-							} }),
-						_react2.default.createElement(_toolbar2.default, { val: 'Call' })
+							}, className: "btn " + (this.state.hasStarted ? 'btn-default disabled' : 'btn-success') }),
+						_react2.default.createElement(_toolbar2.default, { val: 'Call', onClick: function onClick() {
+								return _this2.callPeer();
+							}, className: "btn " + (this.state.hasStarted ? this.state.hasCalled ? 'btn-default disabled' : 'btn-success' : 'btn-default disabled') }),
+						_react2.default.createElement(_toolbar2.default, { val: 'Hang up', onClick: function onClick() {
+								return _this2.hangup();
+							}, className: "btn " + (this.state.hasStarted && this.state.hasCalled ? 'btn-success' : 'btn-default disabled') })
 					),
 					_react2.default.createElement(
 						'div',
@@ -21691,7 +21765,7 @@
 					'button',
 					{ onClick: function onClick() {
 							return _this2.props.onClick();
-						} },
+						}, className: this.props.className },
 					' ',
 					this.props.val
 				);
