@@ -20,13 +20,19 @@ class VideoContainerComponent extends React.Component{
 			'height': '100%'
 		};
 
+
+
 		return (
-			<div id={this.getContainerId(this.props.id)} className="col-sm-4" style={divStyle}>
+			<div id={this.getContainerId(this.props.id)} className={this.props.className} style={divStyle}>
 				<video id={this.getVideoId(this.props.id)} style={videoStyle}></video>
 			</div>
 			
 		);
 	}
 }
+
+VideoContainerComponent.defaultProps = {
+  className: "col-md-4"
+};
 
 export default VideoContainerComponent

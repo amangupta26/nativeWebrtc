@@ -30,11 +30,21 @@ var HeaderComponent = function (_React$Component) {
 	_createClass(HeaderComponent, [{
 		key: 'render',
 		value: function render() {
-			return _react2.default.createElement(
-				'h1',
-				null,
-				' Native WebRTC'
-			);
+			switch (this.props.type) {
+				case '1':
+					return _react2.default.createElement(
+						'h1',
+						{ className: this.props.className },
+						this.props.val
+					);
+
+				case '2':
+					return _react2.default.createElement(
+						'h2',
+						{ className: this.props.className },
+						this.props.val
+					);
+			}
 		}
 	}]);
 

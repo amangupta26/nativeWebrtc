@@ -105,19 +105,19 @@ var FirstPageContainer = function (_React$Component) {
 				offerToReceiveVideo: 1
 			};
 			pc1.createOffer(offerOptions).then(function (offerDesc) {
-				pc1.setLocalDescription(offerDesc).then(function () {}, function (err1) {
-					console.log("err1 ", err1);
+				pc1.setLocalDescription(offerDesc).then(function () {}, function (err) {
+					console.log("err1 ", err);
 				});
-				pc2.setRemoteDescription(offerDesc).then(function () {}, function (err1) {
-					console.log("err2 ", err2);
+				pc2.setRemoteDescription(offerDesc).then(function () {}, function (err) {
+					console.log("err2 ", err);
 				});
 
 				pc2.createAnswer().then(function (answerDesc) {
-					pc2.setLocalDescription(answerDesc).then(function () {}, function (err1) {
-						console.log("err3 ", err3);
+					pc2.setLocalDescription(answerDesc).then(function () {}, function (err) {
+						console.log("err3 ", err);
 					});
-					pc1.setRemoteDescription(answerDesc).then(function () {}, function (err1) {
-						console.log("err4 ", err4);
+					pc1.setRemoteDescription(answerDesc).then(function () {}, function (err) {
+						console.log("err4 ", err);
 					});
 				});
 			});

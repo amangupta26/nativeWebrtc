@@ -9,7 +9,7 @@ import FirstPageContainer from "./firstPageContainer"
 
 
 if(typeof window !== 'undefined'){
-	ReactDOM.render(<div><HeaderComponent /></div>, document.getElementById('header'));
+	ReactDOM.render(<div><HeaderComponent type="1" val="Native WebRTC"/></div>, document.getElementById('header'));
 	ReactDOM.render(<div><FirstPageContainer /></div>, document.getElementById('root'));
 }
 

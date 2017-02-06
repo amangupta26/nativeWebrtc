@@ -58,26 +58,22 @@
 
 	var _header2 = _interopRequireDefault(_header);
 
-	var _firstPageContainer = __webpack_require__(179);
+	var _sessionContainer = __webpack_require__(179);
 
-	var _firstPageContainer2 = _interopRequireDefault(_firstPageContainer);
+	var _sessionContainer2 = _interopRequireDefault(_sessionContainer);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// import ToolBarComponent from "./toolBar"
-
-
-	// import VideoContainerComponent from "./videoContainer"
 	if (typeof window !== 'undefined') {
 		_reactDom2.default.render(_react2.default.createElement(
 			'div',
 			null,
-			_react2.default.createElement(_header2.default, { type: '1', val: 'Native WebRTC' })
+			_react2.default.createElement(_header2.default, { type: '1', val: 'Native WebRTC with signalling', className: 'text-center' })
 		), document.getElementById('header'));
 		_reactDom2.default.render(_react2.default.createElement(
 			'div',
 			null,
-			_react2.default.createElement(_firstPageContainer2.default, null)
+			_react2.default.createElement(_sessionContainer2.default, null)
 		), document.getElementById('root'));
 	}
 
@@ -21513,13 +21509,6 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	// class HeaderComponent extends React.Component{
-	// 	render(){
-	// 		return (
-	// 			<h1> Native WebRTC</h1>
-	// 		);
-	// 	}
-	// }
 	var HeaderComponent = function (_React$Component) {
 		_inherits(HeaderComponent, _React$Component);
 
@@ -21532,19 +21521,18 @@
 		_createClass(HeaderComponent, [{
 			key: 'render',
 			value: function render() {
-				console.log("this.props ", this.props);
 				switch (this.props.type) {
 					case '1':
 						return _react2.default.createElement(
 							'h1',
-							null,
+							{ className: this.props.className },
 							this.props.val
 						);
 
 					case '2':
 						return _react2.default.createElement(
 							'h2',
-							null,
+							{ className: this.props.className },
 							this.props.val
 						);
 				}
@@ -21573,6 +21561,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _header = __webpack_require__(178);
+
+	var _header2 = _interopRequireDefault(_header);
+
 	var _toolbar = __webpack_require__(180);
 
 	var _toolbar2 = _interopRequireDefault(_toolbar);
@@ -21589,32 +21581,32 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var FirstPageContainer = function (_React$Component) {
-		_inherits(FirstPageContainer, _React$Component);
+	var SessionPageMain = function (_React$Component) {
+		_inherits(SessionPageMain, _React$Component);
 
-		function FirstPageContainer() {
-			_classCallCheck(this, FirstPageContainer);
+		function SessionPageMain() {
+			_classCallCheck(this, SessionPageMain);
 
-			var _this = _possibleConstructorReturn(this, (FirstPageContainer.__proto__ || Object.getPrototypeOf(FirstPageContainer)).call(this));
+			var _this = _possibleConstructorReturn(this, (SessionPageMain.__proto__ || Object.getPrototypeOf(SessionPageMain)).call(this));
 
 			_this.state = {
 				'hasStarted': false,
-				'hasCalled': false,
-				'hasStopped': false,
+				'hasMedia': false,
+				'hasJoined': false,
 				'localStream': null,
-				'remoteStream': null,
-				'localPeerConnection': null,
-				'remotePeerConnection': null
+				'remoteStreams': {},
+				'localRPC': null,
+				'remoteRPC': {}
 			};
 			return _this;
 		}
 
-		_createClass(FirstPageContainer, [{
+		_createClass(SessionPageMain, [{
 			key: 'getMedia',
 			value: function getMedia() {
 				var mainThis = this;
 				var constraints = {
-					'audio': false,
+					'audio': true,
 					'video': true
 				};
 
@@ -21625,6 +21617,7 @@
 					});
 					var ele = document.getElementById('vid_local');
 					ele.autoplay = true;
+					ele.muted = true;
 					ele.srcObject = stream;
 				};
 
@@ -21635,110 +21628,44 @@
 				navigator.getUserMedia(constraints, successMethod, failureMethod);
 			}
 		}, {
-			key: 'callPeer',
-			value: function callPeer() {
-				var mainThis = this;
-				var servers = null;
-				var pc1 = new RTCPeerConnection(servers);
-				var pc2 = new RTCPeerConnection(servers);
-
-				pc1.onicecandidate = function (event) {
-					if (event.candidate) pc2.addIceCandidate(new RTCIceCandidate(event.candidate));
-				};
-
-				pc2.onicecandidate = function (event) {
-					if (event.candidate) pc1.addIceCandidate(new RTCIceCandidate(event.candidate));
-				};
-
-				pc2.onaddstream = function (event) {
-					mainThis.setState({
-						'remoteStream': event.stream,
-						'hasCalled': true,
-						'localPeerConnection': pc1,
-						'remotePeerConnection': pc2
-					});
-					var ele = document.getElementById('vid_remote');
-					ele.autoplay = true;
-					ele.srcObject = event.stream;
-				};
-				pc1.addStream(this.state.localStream);
-
-				var offerOptions = {
-					offerToReceiveAudio: 1,
-					offerToReceiveVideo: 1
-				};
-				pc1.createOffer(offerOptions).then(function (offerDesc) {
-					pc1.setLocalDescription(offerDesc).then(function () {}, function (err) {
-						console.log("err1 ", err);
-					});
-					pc2.setRemoteDescription(offerDesc).then(function () {}, function (err) {
-						console.log("err2 ", err);
-					});
-
-					pc2.createAnswer().then(function (answerDesc) {
-						pc2.setLocalDescription(answerDesc).then(function () {}, function (err) {
-							console.log("err3 ", err);
-						});
-						pc1.setRemoteDescription(answerDesc).then(function () {}, function (err) {
-							console.log("err4 ", err);
-						});
-					});
-				});
-			}
-		}, {
-			key: 'hangup',
-			value: function hangup() {
-				this.state.localPeerConnection.close();
-				this.state.remotePeerConnection.close();
-				this.setState({
-					'hasStarted': false,
-					'hasCalled': false,
-					'hasStopped': false,
-					'localStream': null,
-					'remoteStream': null,
-					'localPeerConnection': null,
-					'remotePeerConnection': null
-				});
-				var ele = document.getElementById('vid_local');
-				ele.srcObject = null;
-				ele = document.getElementById('vid_remote');
-				ele.srcObject = null;
-			}
-		}, {
 			key: 'render',
 			value: function render() {
 				var _this2 = this;
+
+				var divStyle = {
+					'border': '2px solid black'
+				};
 
 				return _react2.default.createElement(
 					'div',
 					{ className: 'container' },
 					_react2.default.createElement(
 						'div',
-						{ className: 'row' },
-						_react2.default.createElement(_toolbar2.default, { val: 'Start', onClick: function onClick() {
-								return _this2.getMedia();
-							}, className: "btn " + (this.state.hasStarted ? 'btn-default disabled' : 'btn-success') }),
-						_react2.default.createElement(_toolbar2.default, { val: 'Call', onClick: function onClick() {
-								return _this2.callPeer();
-							}, className: "btn " + (this.state.hasStarted ? this.state.hasCalled ? 'btn-default disabled' : 'btn-success' : 'btn-default disabled') }),
-						_react2.default.createElement(_toolbar2.default, { val: 'Hang up', onClick: function onClick() {
-								return _this2.hangup();
-							}, className: "btn " + (this.state.hasStarted && this.state.hasCalled ? 'btn-success' : 'btn-default disabled') })
+						{ className: 'col-md-3', style: divStyle },
+						_react2.default.createElement(_header2.default, { type: '2', val: 'Me' }),
+						_react2.default.createElement(
+							'div',
+							{ className: 'row' },
+							_react2.default.createElement(_toolbar2.default, { val: 'Start', onClick: function onClick() {
+									return _this2.getMedia();
+								} }),
+							_react2.default.createElement(_toolbar2.default, { val: 'Hang up' })
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'row' },
+							_react2.default.createElement(_videoContainer2.default, { id: 'local', className: 'col-md-12' })
+						)
 					),
-					_react2.default.createElement(
-						'div',
-						{ className: 'row' },
-						_react2.default.createElement(_videoContainer2.default, { id: 'local' }),
-						_react2.default.createElement(_videoContainer2.default, { id: 'remote' })
-					)
+					_react2.default.createElement('div', { className: 'col-md-9', style: divStyle })
 				);
 			}
 		}]);
 
-		return FirstPageContainer;
+		return SessionPageMain;
 	}(_react2.default.Component);
 
-	exports.default = FirstPageContainer;
+	exports.default = SessionPageMain;
 
 
 /***/ },
@@ -21853,7 +21780,7 @@
 
 				return _react2.default.createElement(
 					"div",
-					{ id: this.getContainerId(this.props.id), className: "col-sm-4", style: divStyle },
+					{ id: this.getContainerId(this.props.id), className: this.props.className, style: divStyle },
 					_react2.default.createElement("video", { id: this.getVideoId(this.props.id), style: videoStyle })
 				);
 			}
@@ -21861,6 +21788,10 @@
 
 		return VideoContainerComponent;
 	}(_react2.default.Component);
+
+	VideoContainerComponent.defaultProps = {
+		className: "col-md-4"
+	};
 
 	exports.default = VideoContainerComponent;
 
