@@ -11,8 +11,28 @@
 		<script type="text/javascript">
 			var socket = io.connect('http://localhost:4444');
 			socket.on('connect', function(){
-				console.log("connect");
+				socket.emit('message', JSON.stringify({'type': 'register', 'userId': 1, "roomId": 1234, "name": "Aman"}));
 			});
+
+			socket.on('message', function(data){
+				try{
+					data = JSON.parse(data);
+				}
+				catch(e){
+					console.log("error ", e);
+					return;
+				}
+
+				switch(data.type){
+					case 'register':
+						console.log("registered ", data);
+				}
+
+			});
+
+			window.onbeforeunload = function(){
+				socket.emit('message', JSON.stringify({'type': 'closeSession', 'userId': 1}));
+			};
 		</script>
 		<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 		<script type="text/javascript" src="/static/src/webpack/session-bundle.js"></script>

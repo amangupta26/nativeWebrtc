@@ -21584,20 +21584,27 @@
 	var SessionPageMain = function (_React$Component) {
 		_inherits(SessionPageMain, _React$Component);
 
+		_createClass(SessionPageMain, [{
+			key: 'getDefaultState',
+			value: function getDefaultState() {
+				return {
+					'hasStarted': false,
+					'hasMedia': false,
+					'hasJoined': false,
+					'localStream': null,
+					'remoteStreams': {},
+					'localRPC': null,
+					'remoteRPC': {}
+				};
+			}
+		}]);
+
 		function SessionPageMain() {
 			_classCallCheck(this, SessionPageMain);
 
 			var _this = _possibleConstructorReturn(this, (SessionPageMain.__proto__ || Object.getPrototypeOf(SessionPageMain)).call(this));
 
-			_this.state = {
-				'hasStarted': false,
-				'hasMedia': false,
-				'hasJoined': false,
-				'localStream': null,
-				'remoteStreams': {},
-				'localRPC': null,
-				'remoteRPC': {}
-			};
+			_this.state = _this.getDefaultState();
 			return _this;
 		}
 
@@ -21611,14 +21618,26 @@
 				};
 
 				var successMethod = function successMethod(stream) {
-					mainThis.setState({
-						'hasStarted': true,
-						'localStream': stream
-					});
+					console.log("stream ", stream);
 					var ele = document.getElementById('vid_local');
 					ele.autoplay = true;
 					ele.muted = true;
 					ele.srcObject = stream;
+
+					var servers = null;
+					var rpc = new RTCPeerConnection(null);
+
+					mainThis.setState({
+						'hasStarted': true,
+						'localStream': stream,
+						'localRPC': rpc
+					});
+
+					rpc.onicecandidate = function (event) {
+						if (event.candidate) console.log("event.candidate ", event.candidate);
+						// socket event to store ice candidate
+						// pc2.addIceCandidate(new RTCIceCandidate(event.candidate));
+					};
 				};
 
 				var failureMethod = function failureMethod(err) {
@@ -21626,6 +21645,14 @@
 				};
 
 				navigator.getUserMedia(constraints, successMethod, failureMethod);
+			}
+		}, {
+			key: 'hangup',
+			value: function hangup() {
+				var ele = document.getElementById('vid_local');
+				ele.srcObject = null;
+				var mainThis = this;
+				this.setState(mainThis.getDefaultState());
 			}
 		}, {
 			key: 'render',
@@ -21648,8 +21675,10 @@
 							{ className: 'row' },
 							_react2.default.createElement(_toolbar2.default, { val: 'Start', onClick: function onClick() {
 									return _this2.getMedia();
-								} }),
-							_react2.default.createElement(_toolbar2.default, { val: 'Hang up' })
+								}, className: "btn " + (this.state.hasStarted ? 'btn-default disabled' : 'btn-success') }),
+							_react2.default.createElement(_toolbar2.default, { val: 'Hang up', onClick: function onClick() {
+									return _this2.hangup();
+								}, className: "btn " + (this.state.hasStarted ? 'btn-success' : 'btn-default disabled') })
 						),
 						_react2.default.createElement(
 							'div',
